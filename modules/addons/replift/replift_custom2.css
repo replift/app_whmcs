@@ -1,0 +1,32 @@
+.replift_logo {
+    width: 100%;
+    background-color: #303a52;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    padding: 5px 10px 2px 5px;
+}
+.rbuttonA {
+    background: linear-gradient(to bottom, #435172 5%, #303a52 100%);
+      background-color: #435172;
+      border-radius: 6px;
+      border: 1px solid #cbb16b;
+      display: inline-block;
+      cursor: pointer;
+      color: #ffffff;
+      font-family: 'Verdana', 'Arial';
+      font-size: 14px;
+      padding: 6px 16px;
+      margin: 2px 0px 2px 6px;
+}
+.rbuttonA:hover {
+    background: linear-gradient(to bottom, #303a52 5%, #435172 100%);
+      background-color: #303a52;
+}
+
+/* WHMCS OVERRIDES ON MODULE PAGE */
+.sidebar {
+    width: 230px !important;
+}
+.contentarea {
+    margin: 0 0 0 230px !important;
+}
