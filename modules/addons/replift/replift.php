@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['replift_generate_api_c
    replift_generate_api_credentials($whmcs);
 }
 
-
+// function that adds any new IPs that are found
 function replift_addips($whmcs, $newData) {
 
     // get ips already here
@@ -336,17 +336,38 @@ function replift_config()
  */
 function replift_activate()
 {
-    // Create custom tables and schema required by your module
+    global $whmcs;
+    
+    // Create custom replift table. Stores backup configs
     try {
         Capsule::schema()
             ->create(
-                'mod_addonexample',
+                'replift_config',
                 function ($table) {
                     /** @var \Illuminate\Database\Schema\Blueprint $table */
                     $table->increments('id');
-                    $table->text('demo');
+                    $table->string('setting');
+                    $table->text('value');
+                    $table->timestamps();
                 }
-            );
+        );
+        logActivity('Replift: replift_config table has been created' , 0);
+
+        // Backup current API Whitelist config on install
+        Capsule::connection()->transaction(
+            function ($connectionManager) {
+                    /** @var \Illuminate\Database\Connection $connectionManager */
+                    global $whmcs;
+                    $whitelistedips = $whmcs->get_config( "APIAllowedIPs" );
+                    $connectionManager->table('replift_config')->insert(
+                        [
+                            'setting' => 'api_whitelist_before_activate',
+                            'value' => $whitelistedips,
+                        ]
+                    );
+            }
+        );
+        logActivity('Replift: APIAllowedIPs setting successfully backed up to replift_config table' , 0);
 
         return [
             // Supported values here include: success, error or info
@@ -356,10 +377,15 @@ function replift_activate()
 
         ];
     } catch (\Exception $e) {
+        //install failed so lets remove the table if it made it that far
+        replift_deactivate();
+        logActivity('Replift: Install rollback, replift_config table removed' , 0);
+
         return [
             // Supported values here include: success, error or info
             'status' => "error",
-            'description' => 'Unable to create mod_addonexample: ' . $e->getMessage(),
+            'description' => 'Unable to create replift_config: ' . $e->getMessage()
+            . 'Install rollback, replift_config table removed',
         ];
     }
 }
@@ -379,22 +405,21 @@ function replift_activate()
  */
 function replift_deactivate()
 {
-    // Undo any database and schema modifications made by your module here
+    // Undo any database and schema modifications
     try {
         Capsule::schema()
-            ->dropIfExists('mod_addonexample');
+            ->dropIfExists('replift_config');
 
         return [
             // Supported values here include: success, error or info
             'status' => 'success',
-            'description' => 'This is a demo module only. '
-                . 'In a real module you might report a success here.',
+            'description' => 'Replift has been deactivated.',
         ];
     } catch (\Exception $e) {
         return [
             // Supported values here include: success, error or info
             "status" => "error",
-            "description" => "Unable to drop mod_addonexample: {$e->getMessage()}",
+            "description" => "Unable to drop table replift_config: {$e->getMessage()}",
         ];
     }
 }
@@ -415,7 +440,8 @@ function replift_upgrade($vars)
 {
     $currentlyInstalledVersion = $vars['version'];
 
-    /// Perform SQL schema changes required by the upgrade to version 1.1 of your module
+    /*
+    // Perform SQL schema changes required by the upgrade to version 1.1 of your module
     if ($currentlyInstalledVersion < 1.1) {
         $schema = Capsule::schema();
         // Alter the table and add a new text column called "demo2"
@@ -432,6 +458,7 @@ function replift_upgrade($vars)
             $table->text('demo3');
         });
     }
+    */
 }
 
 /**
