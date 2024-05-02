@@ -1,0 +1,99 @@
+.replift_logo {
+    width: 100%;
+    background-color: #303a52;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    padding: 5px 10px 2px 5px;
+}
+.rbuttonA {
+    background: linear-gradient(to bottom, #435172 5%, #303a52 100%);
+      background-color: #435172;
+      border-radius: 6px;
+      border: 1px solid #cbb16b;
+      display: inline-block;
+      cursor: pointer;
+      color: #ffffff;
+      font-family: 'Verdana', 'Arial';
+      font-size: 14px;
+      padding: 6px 16px;
+      margin: 2px 0px 2px 6px;
+}
+.rbuttonA:hover {
+    background: linear-gradient(to bottom, #303a52 5%, #435172 100%);
+    background-color: #303a52;
+}
+#r-white-window {
+    background-color: #f8f8f8;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    padding: 20px;
+    height: auto;
+    color: #1d2332;
+    font-family: 'Verdana', 'Arial';
+    margin-right: 6px;
+}
+.r-center {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-family: 'Verdana', 'Arial';
+    size: 9px;
+}
+.r-container {
+  width: 95%;
+  font-family: 'Verdana', 'Arial';
+}
+.r-header-text {
+    font-family: 'Verdana', 'Arial';
+    size: 9px;
+    display: flex;
+    justify-content: center;
+    font-weight: 600;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.free-text {
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-family: 'Verdana', 'Arial';
+}
+.r-box-shaded{
+  width: "100%";
+  background-color: #eae0c2;
+  border-top-right-radius: 15px;
+  box-sizing: border-box;
+  font-family: 'Verdana', 'Arial';
+}
+.r-box-shaded-header{
+  width: "100%";
+  background-color: #303a52;
+  border-top-right-radius: 15px;
+  padding: 6px;
+  display: flex;
+  justify-content: center;
+  font-family: 'Verdana', 'Arial';
+}
+
+/* WHMCS OVERRIDES ON MODULE PAGE */
+.sidebar {
+    width: 230px !important;
+    font-family: 'Verdana', 'Arial' !important;
+    padding-top: 5px;
+}
+.contentarea {
+    margin: 0 0 0 230px !important;
+    font-family: 'Verdana', 'Arial' !important;
+    padding: 5px 0px 0px 5px !important;
+}
+h1 {
+    margin: 0 0 5px 0 !important;
+    color: #FFF !important;
+    font-size: 1.4em !important;
+    font-weight: 400 !important;
+    background-color: #303a52 !important;
+    padding: 6px !important;
+    border-top-left-radius: 10px !important;
+}
