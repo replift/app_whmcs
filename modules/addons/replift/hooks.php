@@ -145,11 +145,16 @@ add_hook('AdminAreaHeadOutput', 1, function($vars) {
 // For adding date ticket was originally submitted on ticket page
 add_hook('AdminAreaViewTicketPage', 1, function($vars) {
 
+    $admin_fname = Capsule::table('tbladmins')->where('id', $_SESSION['adminid'])->value('firstname');
+    $admin_lname = Capsule::table('tbladmins')->where('id', $_SESSION['adminid'])->value('lastname');
+    $agent_name = $admin_fname . " " . $admin_lname;
+    
     $ticket_created = Capsule::table('tbltickets')->where('id', $vars['ticketid'])->value('date');
     $ticket_status = Capsule::table('tbltickets')->where('id', $vars['ticketid'])->value('status');
     $ticket_department = Capsule::table('tbltickets')->where('id', $vars['ticketid'])->value('did');
 
-    $return = '<div id="replift_ticket_created" style="display: none">'.$ticket_created.'</div>';
+    $return = '<div id="replift_agent_name" style="display: none">'.$agent_name.'</div>';
+    $return = $return.'<div id="replift_ticket_created" style="display: none">'.$ticket_created.'</div>';
     $return = $return.'<div id="replift_ticket_status" style="display: none">'.$ticket_status.'</div>';
     $return = $return.'<div id="replift_ticket_department" style="display: none">'.$ticket_department.'</div>';
     
