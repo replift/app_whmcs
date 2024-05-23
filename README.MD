@@ -6,13 +6,11 @@ Replift leverages advanced AI technology to transform your WHMCS support helpdes
 
 Our WHMCS module connects your tickets to our Replift AI models and customized models just for you while updating the models as your helpdesk conversations grow.  Replift turns your helpdesk into a living knowledgebase which in turn provides solutions to your support reps on how to solve incoming tickets. Now when one support rep solves a problem all your reps know the answer!  Your support reps can also chat with Replift to help diagnose and resolve outstanding issues never seen before all within the context of your living knowledgebase.
 
-WHMCS customers use code **WHMCSMARKETPLACE** to receive an additional month free!
-
 WHMCS pricing starts at $0.50 per ticket and goes as low as $0.30.
 
 To get started, download and install our WHMCS module.  Once activated the module will provide a link to register your Replift account.  Register your account and follow the instructions to get up and running the same day!
 
-Your account starts with a 14 day trial, no credit card needed.  After your 14 days, subscribe and use the code **WHMCSMARKETPLACE** for your next month free!
+Your account starts with a 14 day trial, no credit card needed.
 
 ### Why Replift Stands Out with AI:
 
