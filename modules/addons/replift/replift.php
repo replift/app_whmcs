@@ -109,7 +109,7 @@ function registerCheck()
     }
 }
 
-// OLD button click to add IPs to database?
+// Development
 /*
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset ($_POST['replift_addips'])) {
     replift_addips();
@@ -234,9 +234,11 @@ function replift_generate_api_credentials()
     global $replift_uuid_existing;
     global $replift_api_marketplace;
     global $replift_marketplace_token;
-
+ 
     $replift_admin = new WHMCS\Auth();
     $replift_admin->getInfobyUsername('replift', NULL, false);
+    $pass = phpseclib\Crypt\Random::string(21);
+    $replift_user_role = Capsule::table('tbladminroles')->where('name', 'Replift')->value('id');
 
     // get departments as a collection
     $departmentIds = Capsule::table('tblticketdepartments')->pluck('id');
@@ -245,14 +247,38 @@ function replift_generate_api_credentials()
     // Join the array into a string with commas and add commas at both ends
     $departmentIdsString = ',' . implode(',', $departmentIdsArray) . ',';
 
+    // create replift user role if it doesnt exist
+    if (!$replift_user_role) {
+        $roleDetails = array();
+        $roleDetails["name"] = 'Replift';
+        $roleDetails["widgets"] = '';
+        $roleDetails["reports"] = '';
+        $roleDetails["systememails"] = 0;
+        $roleDetails["accountemails"] = 0;
+        $roleDetails["supportemails"] = 0;
+        insert_query("tbladminroles", $roleDetails);
+    }
+    logActivity('Replift: Replift user role created.', 0);
+    // Get id of new role
+    $replift_user_role = Capsule::table('tbladminroles')->where('name', 'Replift')->value('id');
+    
+    // add role perms for API Only
+    Capsule::table('tbladminperms')->insert(
+        array(
+            'roleid' => $replift_user_role,
+            'permid' => 81
+        )
+    );
+    logActivity('Replift: Replift role set to API perms only.', 0);
+
     // create replift user if it doesnt exist
     if (!$replift_admin->getAdminID()) {
         $adminDetails = array();
-        $adminDetails["roleid"] = 1;
+        $adminDetails["roleid"] = $replift_user_role;
         $adminDetails["username"] = 'replift';
         $adminDetails["firstname"] = 'Replift';
         $adminDetails["lastname"] = 'API';
-        $adminDetails["email"] = 'support@replift.com';
+        $adminDetails["email"] = 'noreply@replift.com';
         $adminDetails["signature"] = '';
         $adminDetails["disabled"] = 0;
         $adminDetails["notes"] = '';
@@ -271,7 +297,6 @@ function replift_generate_api_credentials()
     }
     $replift_admin->getInfobyUsername('replift', NULL, false);
     //$replift_admin->getInfobyUsername($adminDetails["username"], NULL, false);
-    $pass = phpseclib\Crypt\Random::string(21);
     $replift_admin->generateNewPasswordHashAndStoreForApi(md5($pass));
 
     $replift_api_role = \WHMCS\Api\Authorization\ApiRole::where("role", 'Replift')->get();
@@ -673,6 +698,19 @@ function replift_deactivate()
             }
         }
 
+        // Remove Replift User Role
+        $replift_user_role_id = Capsule::table('tbladminroles')->where('name', 'Replift')->value('id');
+        if (!$replift_user_role_id) {
+            logActivity('Replift: Replift User Role does not exist. Skipping', 0);
+        } else {
+            try {
+                $deleted = Capsule::table('tbladminroles')->where('name', 'Replift')->delete();
+                logActivity('Replift: Replift User Role removed successfully during deactivation', 0);
+            } catch (\Exception $e) {
+                logActivity('Replift: Replift User Role failed to remove: '.$e->getMessage(), 0);
+            }
+        }
+
         $replift_api_role_id = Capsule::table('tblapi_roles')->where('role', 'Replift')->value('id');
         if (!$replift_api_role_id) {
             logActivity('Replift: Replift API Role does not exist. Skipping', 0);
@@ -820,12 +858,14 @@ function replift_output($vars)
     }
     echo '</div>';
 
-    /*echo "<br>";
+    /*
+    echo "<br>";
     $button_api = '<form action="" method="post">
     <input type="submit" name="replift_test" value="Replift testing" />
     </form><br>';
     echo $button_api;
     */
+    
 }
 
 /**

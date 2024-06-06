@@ -6,10 +6,9 @@ if ( document.getElementById("repliftconfig") ) {
         <tbody>
             <tr>
                 <td width="20%" class="fieldlabel">Replift Configuration values</td>
-                <span>Stuff n thangs</span>
+                <span>test</span>
             </tr>
         </tbody>
     </table>`;
 
 }
-
