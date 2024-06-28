@@ -16,6 +16,7 @@
  * require_once __DIR__ . '/path/to/library/loader.php';
  *
  * Also, perform any initialization required by the service's library.
+ * 
  */
 
 use WHMCS\Database\Capsule;
@@ -479,7 +480,7 @@ function replift_config()
         // Default language
         'language' => 'english',
         // Version number
-        'version' => '1.1',
+        'version' => '1.0.3',
         //'fields' => [
         // a text field type allows for single line text input
         //'WHMCS replift user' => [

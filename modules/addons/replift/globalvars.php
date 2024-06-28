@@ -15,6 +15,7 @@ $replift_api_whitelist = "https://api.replift.com/api/v2/ip_whitelist/";
 $replift_marketplace_token = "2MulZ2cPhmYKHYXnkrbfemX9mbDaHtKruHE4ptrd";
 
 // Set values based on the environment
+
 switch ($replift_app_env) {
     case "dev":
         $replift_dashboard_link = "https://development-dashboard.replift.com";
@@ -23,9 +24,9 @@ switch ($replift_app_env) {
         $replift_marketplace_token = "IAZt7TSjgIlpBPLEeEVufl2ulidUKeUscAPN7PGf";
         break;
     case "stage":
-        $replift_dashboard_link = "https://staging-dashboard.replift.com";
-        $replift_api_marketplace = "https://staging-dashboard.replift.com/api/marketplace";
-        $replift_api_whitelist = "https://api-stage.replift.com/api/v2/ip_whitelist/";
-        $replift_marketplace_token = "KxP8wCuVFF7WmZVt0jlD8ZUHClqO0ciqmwPLJuBA";
+        //$replift_dashboard_link = "https://staging-dashboard.replift.com";
+        //$replift_api_marketplace = "https://staging-dashboard.replift.com/api/marketplace";
+        //$replift_api_whitelist = "https://api-stage.replift.com/api/v2/ip_whitelist/";
+        //$replift_marketplace_token = "KxP8wCuVFF7WmZVt0jlD8ZUHClqO0ciqmwPLJuBA";
         break;
 }
