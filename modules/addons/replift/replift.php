@@ -480,7 +480,7 @@ function replift_config()
         // Default language
         'language' => 'english',
         // Version number
-        'version' => '1.0.3',
+        'version' => '1.0.4',
         //'fields' => [
         // a text field type allows for single line text input
         //'WHMCS replift user' => [
