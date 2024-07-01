@@ -9,6 +9,10 @@ if (!$replift_app_env) {
 }
 
 // Initialize variables to default production values
+global $replift_dashboard_link;
+global $replift_api_marketplace;
+global $replift_api_whitelist;
+global $replift_marketplace_token;
 $replift_dashboard_link = "https://dashboard.replift.com";
 $replift_api_marketplace = "https://dashboard.replift.com/api/marketplace/";
 $replift_api_whitelist = "https://api.replift.com/api/v2/ip_whitelist/";
